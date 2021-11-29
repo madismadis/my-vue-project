@@ -21,19 +21,21 @@ router.get("/get-todos", async function (request, response) {
 
 // Delete
 router.get("/delete-todo/:id", async function (request, response) {
-  const result = await Todos.deleteOne(({ _id: request.params.id }));
-  console.log(result);
-  response.send(result);
+  await Todos.deleteOne({ _id: request.params.id }); //(const resulti võib ära kustutada)
+  console.log("Deleting todo..");
+  response.send({});
+});
   
-})
 
-// Mark Complete -Update status
-  router.get("update-todo/:id", async function (request, response) {
-  const result = await Todos.updateOne({ _id: request.params.id });
-  console.log(result);
-  response.send(result);
-
-  })
+// Mark Complete -Update status ja set määra uus väärtuse parameeter
+  router.post("/update-todo/:id", async function (request, response) {
+     // { status: 'COMPLETE'} või { status: 'ACTIVE'}
+  console.log(request.body);
+  await Todos.updateOne({ _id: request.params.id },{ $set: { status: request.body.status } }
+  );
+  console.log("Updating todo..");
+  response.send({});
+});
 
 //otsib id põhiselt andmebaasist ja tagastab
 router.get("/get-todo/:id", async function (request, response) {

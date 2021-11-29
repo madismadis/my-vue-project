@@ -13,9 +13,8 @@
           >
             {{ todo.title }} {{ todo.status }}
 
-          <button @click="updateOne(todo._id)" type="submit" class="btn btn-dark mx-5">Märgi tehtuks</button>
-
-          <button @click="deleteOne(todo._id)" type="submit" class="btn btn-dark mx-5">Kustuta task</button>
+          <button @click="updateTodo(todo._id)" class="btn btn-dark mx-5">Märgi tehtuks</button>
+          <button @click="deleteTodo(todo._id)" class="btn btn-dark mx-5">Kustuta task</button>
           </li>
         </ul>
        
@@ -79,16 +78,17 @@ export default {
       await getTodos();
     }
 
-// Delete -OK,
-    async function deleteOne(id) {
-      const result = await axios.get("/api/delete-todo/" + id)
-      todosFromServer.value = result.data;
-      console.log(result.data);
-      getTodos();
-    
+// Delete
+    async function deleteTodo(id) {
+      await axios.get("/api/delete-todo/" + id);
+      await getTodos();
   }
-
-  getTodos(); //topelt?
+// Update
+  async function updateTodo(id) {
+      await axios.post("/api/update-todo/" + id, { status: "COMPLETE" });
+      await getTodos();
+}
+  getTodos(); 
 
 // /*allolevat ei kasutata, see on ainult siis kui BE/db taga ei ole*/
 //     function addNewTodo() {
@@ -104,8 +104,8 @@ export default {
       addTodo,
       singleTodo,
       getTodo,
-      deleteOne,
-      // updateOne
+      deleteTodo,
+      updateTodo,
     };
   },
 };
