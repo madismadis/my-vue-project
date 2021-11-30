@@ -1,6 +1,10 @@
-const mongoose = require("mongoose"); //package'i require'mine
+const mongoose = require("mongoose");
+const { Todos } = require("./models/TodoSchema");
+const { Users } = require("./models/UsersSchema");
 
-// Connecting to database; te
+// Connecting to database
+
+// Connecting to database; 
 //see on veõtud mongost: "mongodb+srv://test:<password>@cluster0.p6fow.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
 //st oli kasutajanimi, password asendada tegeliku salasõnaga, myFurstDatabase tuelks asendada reaalse andmebaasi nimega
 //kui seda ei ole, siis võib samaks jääda, loob selle nimega.
@@ -27,14 +31,12 @@ const Schema = mongoose.Schema;
  all document interaction - creating, reading, saving, and deleting. This makes the model a very powerful tool.
 Taken from "Mongoose for Application Development", by Simon Holmes, 2013 */
 
-const TodoSchema = new Schema({
-  title: { type: String },
-  status: { type: String },
-});
 
-const Todos = mongoose.model("Todos", TodoSchema);
+
+// const Todos = mongoose.model("Todos", TodoSchema);
 
 //et router.js välja anda ja saakskasutada, peab tegema expordi
 module.exports = {
   Todos,
+  Users
 };

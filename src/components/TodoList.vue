@@ -57,7 +57,11 @@ export default {
     const singleTodo = ref({}); //muutuja salvestuseks, kui id põhiselt otsida, et ananks tulemuse?
 
     async function getTodos() {
-      const result = await axios.get("/api/get-todos");
+      const result = await axios.get("/api/get-todos", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
       todosFromServer.value = result.data;
       console.log(result.data);
     }
